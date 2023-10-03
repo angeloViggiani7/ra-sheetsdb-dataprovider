@@ -1,47 +1,31 @@
-name: Update NPM Package
+name: Publish to npm
 
 on:
   push:
     branches:
-      - main # You can specify the branch you want to trigger this workflow on
+      - main #actived when the push is done on main
 
 jobs:
-  update-npm:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v2
-      
-    - name: Install Dependencies
-      run: npm install
+  publish:
+    runs-on: ubuntu-latest  #job environment
 
-    - name: Authenticate with NPM
-      run: |
-        #Log in to npm using your secret token
-        echo "//registry.npmjs.org/:_authToken=\${{ secrets.NPM_AUTH_TOKEN }}" > ~/.npmrc
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3  #to fetch the code from your repository
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3 #to set up Node.js
+        with:
+          node-version: 16
+
+      - name: Authenticate with NPM
+        run: |
+          # Log in to npm using your secret token
+          echo "//registry.npmjs.org/:_authToken=\${{ secrets.NPM_AUTH_TOKEN }}" > ~/.npmrc
           
-    - name: Update NPM Package
-      run: |
-        # Replace 'github_username/repo_name' with the actual GitHub repository URL.
-        REPO_URL="https://github.com/angeloViggiani7/ra-sheetsdb-dataprovider.git"
-        
-        # Replace 'folder' with the folder containing the NPM package.
-        PACKAGE_DIR="ra-sheetsdb-dataprovider"
-        
-        # Clone the GitHub repository.
-        git clone "$REPO_URL" updated_repo
-        
-        # Copy updated files to the NPM package folder.
-        cp -r updated_repo/* "$PACKAGE_DIR"
-        
-        # Commit and push the changes.
-        cd "$PACKAGE_DIR"
-        git config user.email "vangelowork@gmail.com"
-        git config user.name "angeloViggiani7"
-        git add .
-        git commit -m "Update NPM package from GitHub repository"
-        git push
-        
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Publish to npm
+        run: npm publish
+    
