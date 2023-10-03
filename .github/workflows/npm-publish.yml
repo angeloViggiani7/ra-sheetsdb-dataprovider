@@ -3,25 +3,29 @@ name: Publish to npm
 on:
   push:
     branches:
-      - main
+      - main #actived when the push is done on main
 
 jobs:
   publish:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  #job environment
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3  #to fetch the code from your repository
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v3 #to set up Node.js
         with:
           node-version: 16
 
+      - name: Authenticate with NPM
+        run: |
+          # Log in to npm using your secret token
+          echo "//registry.npmjs.org/:_authToken=\${{ secrets.NPM_AUTH_TOKEN }}" > ~/.npmrc
+          
       - name: Install dependencies
         run: npm ci
 
       - name: Publish to npm
         run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+    
