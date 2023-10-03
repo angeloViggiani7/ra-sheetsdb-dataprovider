@@ -1,0 +1,19 @@
+{
+  "name": "ra-sheetsdb-dataprovider",
+  "version": "1.0.0",
+  "description": "sheetDB object ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/angeloViggiani7/ra-sheetsdb-dataprovider.git"
+  },
+  "author": "angeloViggiani7",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/angeloViggiani7/ra-sheetsdb-dataprovider/issues"
+  },
+  "homepage": "https://github.com/angeloViggiani7/ra-sheetsdb-dataprovider#readme"
+}
