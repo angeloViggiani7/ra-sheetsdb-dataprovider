@@ -4,30 +4,26 @@
 name: Node.js Package
 
 on:
-  release:
-    types: [created]
+  push:
+      branches:
+        -main
 
 jobs:
-  build:
+  update-npm:
     runs-on: ubuntu-latest
+    
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - run: npm ci
-      - run: npm test
+      - run: npm install
+      - name: Push changes to GitHub
+        run: git push origin main # Change the branch if needed
 
-  publish-npm:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          registry-url: https://registry.npmjs.org/
-      - run: npm ci
-      - run: npm publish
+      - name: Publish to npm
+        run: npm publish
         env:
-          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+          NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}} 
+
+
