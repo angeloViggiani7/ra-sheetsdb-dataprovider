@@ -28,7 +28,7 @@ jobs:
         git clone "https://github.com/angeloViggiani7/ra-sheetsdb-dataprovider.git"
         
         # Copy updated files to the NPM package folder.
-        cp -r updated_repo/* "$PACKAGE_DIR"
+        cp -r "$PACKAGE_DIR"
         
         # Commit and push the changes.
         cd "$PACKAGE_DIR"
