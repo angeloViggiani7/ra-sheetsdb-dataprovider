@@ -22,7 +22,10 @@ jobs:
         run: |
           # Log in to npm using your secret token
           echo "//registry.npmjs.org/:_authToken=\${{ secrets.NPM_AUTH_TOKEN }}" > ~/.npmrc
-          
+
+      - name: Access to organization
+        run: npm access grant <read-write> <applicasrl:developers> [<ra-sheetsdb-dataprovider>]
+        
       - name: Install dependencies
         run: npm ci
 
